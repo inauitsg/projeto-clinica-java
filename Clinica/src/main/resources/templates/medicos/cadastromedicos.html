@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Clinica Capgemini</title>
+    </head>
+
+    <body>
+        <h1>Cadastro de médicos</h1>  
+        <form th:action="@{/cadastromedicos}" th:object="${medico}" method="post">
+        <label>Especialidade</label>
+        	<select th:field="*{idcontato}")>
+                <option th:each="contato : ${contatos}" 
+                        th:value="${contato.id}" 
+                        th:text="${contato.nome}"></option>
+            </select>
+            <label>Nome</label>
+            <input type="text" th:field="*{nome}" placeholder="Informe nome" />
+            <label>CRM</label>
+            <input type="text" th:field="*{crm}" placeholder="Informe CRM" />
+            <label>Telefone</label>
+            <input type="text" th:field="*{telefone}" placeholder="Informe telefone" />
+            <label>Dias</label>
+            <input type="text" th:field="*{dias}" placeholder="Informe dias de atendimento" />
+            <button type="submit">Gravar</button>
+        </form>     
+    </body>
+</html>
