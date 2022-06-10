@@ -17,34 +17,41 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aulas.rest.dto.UsuarioDTO;
 import com.aulas.rest.servicos.UsuarioService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
 	@Autowired
 	UsuarioService service;
-
+	
+	@ApiOperation(value = "Lista todos os usuários cadastrados")
 	@GetMapping
 	public ResponseEntity<List<UsuarioDTO>> pegaUsuarios() {
 		return ResponseEntity.ok(service.listarTodos());
 	}
-
+	
+	@ApiOperation(value = "Seleciona usuário pelo id cadastrado")
 	@GetMapping("/{idusuario}")
 	public ResponseEntity<UsuarioDTO> pegarUsuario(@PathVariable("idusuario") int idusuario) {
 		UsuarioDTO userDTO = service.pegarUsuario(idusuario);
 		return ResponseEntity.status(HttpStatus.OK).body(userDTO);
 	}
-
+	
+	@ApiOperation(value = "Salva o cadastro do usuário")
 	@PostMapping
 	public ResponseEntity<UsuarioDTO> salvar(@RequestBody UsuarioDTO usuario) {
 		UsuarioDTO user = service.salvar(usuario);
 		return ResponseEntity.status(HttpStatus.CREATED).body(user);
 	}
-
+	
+	@ApiOperation(value = "Altera o cadastro do usuário")
 	@PutMapping("/{idusuario}")
 	public ResponseEntity<UsuarioDTO> alterar(@PathVariable("idusuario") int idusuario, @RequestBody UsuarioDTO usuario) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.alterar(idusuario, usuario));
 	}
-
+	
+	@ApiOperation(value = "Deleta o cadastro do usuário")
 	@DeleteMapping("/{idusuario}")
 	public ResponseEntity<UsuarioDTO> excluir(@PathVariable("idusuario") int idusuario) {
 		try {

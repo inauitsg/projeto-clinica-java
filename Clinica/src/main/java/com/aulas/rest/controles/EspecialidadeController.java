@@ -16,35 +16,42 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aulas.rest.dto.EspecialidadeDTO;
 import com.aulas.rest.servicos.EspecialidadeService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/especialidade")
 public class EspecialidadeController {
 	
 	@Autowired
 	EspecialidadeService service;
-
+	
+	@ApiOperation(value = "Lista todos as especialidades médicas cadastradas")
 	@GetMapping
 	public ResponseEntity<List<EspecialidadeDTO>> pegaEspecialidade() {
 		return ResponseEntity.ok(service.listarTodos());
 	}
-
+	
+	@ApiOperation(value = "Seleciona especialidade médica pelo id cadastrado")
 	@GetMapping("/{idespecialidade}")
 	public ResponseEntity<EspecialidadeDTO> pegarEspecialidade(@PathVariable("idespecialidade") int idespecialidade) {
 		EspecialidadeDTO userDTO = service.pegarEspecialidade(idespecialidade);
 		return ResponseEntity.status(HttpStatus.OK).body(userDTO);
 	}
-
+	
+	@ApiOperation(value = "Salva o cadastro da especialidae médica")
 	@PostMapping
 	public ResponseEntity<EspecialidadeDTO> salvar(@RequestBody EspecialidadeDTO especialidade) {
 		EspecialidadeDTO user = service.salvar(especialidade);
 		return ResponseEntity.status(HttpStatus.CREATED).body(user);
 	}
-
+	
+	@ApiOperation(value = "Altera o cadastro da especialidae médica")
 	@PutMapping("/{idespecialidade}")
 	public ResponseEntity<EspecialidadeDTO> alterar(@PathVariable("idespecialidade") int idespecialidade, @RequestBody EspecialidadeDTO especialidade) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.alterar(idespecialidade, especialidade));
 	}
-
+	
+	@ApiOperation(value = "Deleta o cadastro da especialidae médica")
 	@DeleteMapping("/{idespecialidade}")
 	public ResponseEntity<EspecialidadeDTO> excluir(@PathVariable("idespecialidade") int idespecialidade) {
 		try {

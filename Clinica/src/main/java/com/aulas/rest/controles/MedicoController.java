@@ -19,6 +19,8 @@ import com.aulas.rest.dto.MedicoDTO;
 import com.aulas.rest.servicos.EspecialidadeService;
 import com.aulas.rest.servicos.MedicoService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/medico")
 public class MedicoController {
@@ -28,18 +30,21 @@ public class MedicoController {
 	
 	@Autowired
 	EspecialidadeService especilidadeService;	
-		
+	
+	@ApiOperation(value = "Lista todos os médicos cadastrados")
 	@GetMapping
 	public ResponseEntity<List<MedicoDTO>> pegaMedicos() {
 		return ResponseEntity.ok(service.listarTodos());
 	}
-
+	
+	@ApiOperation(value = "Seleciona médico pelo id cadastrado")
 	@GetMapping("/{idmedico}")
 	public ResponseEntity<MedicoDTO> pegarMedico(@PathVariable("idmedico") int idmedico) {
 		MedicoDTO medicosDTO = service.pegarMedico(idmedico);
 		return ResponseEntity.status(HttpStatus.OK).body(medicosDTO);
 	}
-
+	
+	@ApiOperation(value = "Salva o cadastro do médico")
 	@PostMapping
 	public ResponseEntity<MedicoDTO> salvar(@RequestBody MedicoDTO medico) {
 		EspecialidadeDTO especialidade = especilidadeService.buscaPorNome(medico.getEspecialidade().getEspecialidade());
@@ -54,12 +59,14 @@ public class MedicoController {
 		MedicoDTO med = service.salvar(medico);
 		return ResponseEntity.status(HttpStatus.CREATED).body(med);
 	}
-
+	
+	@ApiOperation(value = "Altera o cadastro do médico")
 	@PutMapping("/{idmedico}")
 	public ResponseEntity<MedicoDTO> alterar(@PathVariable("idmedico") int idmedico, @RequestBody MedicoDTO medico) {
 	 	return ResponseEntity.status(HttpStatus.OK).body(service.alterar(idmedico, medico));
 	}
-
+	
+	@ApiOperation(value = "Deleta o cadastro do médico")
 	@DeleteMapping("/{idmedico}")
 	public ResponseEntity<MedicoDTO> excluir(@PathVariable("idmedico") int idmedico) {
 		try {
