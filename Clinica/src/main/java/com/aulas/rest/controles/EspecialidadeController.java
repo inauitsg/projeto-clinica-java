@@ -1,9 +1,11 @@
 package com.aulas.rest.controles;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,7 @@ import com.aulas.rest.servicos.EspecialidadeService;
 
 import io.swagger.annotations.ApiOperation;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/especialidade")
 public class EspecialidadeController {
@@ -51,7 +54,7 @@ public class EspecialidadeController {
 		return ResponseEntity.status(HttpStatus.OK).body(service.alterar(idespecialidade, especialidade));
 	}
 	
-	@ApiOperation(value = "Deleta o cadastro da especialidae médica")
+	@ApiOperation(value = "Deleta o cadastro da especialidade médica")
 	@DeleteMapping("/{idespecialidade}")
 	public ResponseEntity<EspecialidadeDTO> excluir(@PathVariable("idespecialidade") int idespecialidade) {
 		try {
